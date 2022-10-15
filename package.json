@@ -1,0 +1,25 @@
+{
+  "name": "@plone-collective/volto-sentry",
+  "version": "0.1.0",
+  "description": "volto-sentry: Volto add-on",
+  "main": "src/index.js",
+  "license": "MIT",
+  "keywords": [
+    "volto-addon",
+    "volto",
+    "plone",
+    "react"
+  ],
+  "scripts": {
+    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon"
+  },
+  "devDependencies": {
+    "@plone/scripts": "*"
+  },
+  "dependencies": {
+    "@sentry/browser": "7.15.0",
+    "@sentry/integrations": "7.15.0",
+    "@sentry/node": "7.15.0",
+    "@sentry/webpack-plugin": "1.19.1"
+  }
+}
