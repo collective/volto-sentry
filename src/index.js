@@ -24,14 +24,6 @@ const loadSentry = () => {
   });
 };
 
-if ((__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) || __SENTRY__?.SENTRY_DSN)
-  loadSentry();
-
-if (__SERVER__) {
-  const apply = require('./server').default;
-  apply();
-}
-
 const Sentry = loadable.lib(
   () => import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'), // chunk name avoids ad blockers
 );
@@ -45,6 +37,14 @@ const applyConfig = (config) => {
   }
   config.settings.sentryOptions = sentryOptions;
   config.settings.storeExtenders = (stack) => [crashReporter, ...stack];
+
+  if (__SERVER__) {
+    const apply = require('./server').default;
+    apply();
+  }
+
+  if ((__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) || __SENTRY__?.SENTRY_DSN)
+    loadSentry();
 
   return config;
 };
