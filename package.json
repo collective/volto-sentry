@@ -13,8 +13,8 @@
   "scripts": {
     "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon"
   },
-  "bin" :{
-    "create-sentry-release": "src/create-sentry-release.js",
+  "bin": {
+    "create-sentry-release": "./src/create-sentry-realease.js"
   },
   "devDependencies": {
     "@plone/scripts": "*"
