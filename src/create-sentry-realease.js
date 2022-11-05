@@ -1,6 +1,5 @@
+import { fetchFromAPI } from '../helpers/helpers';
 const exec = () => {};
-
-const fetchFromSentry = async (endpoint) => {};
 
 export const createSentryRelease = async () => {
   console.log('intru in create');
@@ -18,69 +17,49 @@ export const createSentryRelease = async () => {
     process.env.RAZZLE_SENTRY_RELEASE
   ) {
     CREATE = true;
-    console.log('intru aici');
+
     if (PARAM !== '--force') {
-      let getSentryReleaseURL =
-        'https://sentry.io/api/0/organizations/uclass-software/releases/';
-      //try and cath
-      console.log(getSentryReleaseURL);
-      const response = await fetch(
-        'https://sentry.io/api/0/organizations/uclass-software/releases/',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization:
-              'Bearer 0adf3f65943944d6a2b9ab3f893f446d1423b26a02694230b741378b42223444',
-          },
-        },
-        {},
+      let releases = await fetchFromAPI(
+        'api/0/organizations/uclass-software/releases/',
+        { Authorization: `Bearer ${process.env.RAZZLE_SENTRY_AUTH_TOKEN}` },
       );
-      console.log(response);
-      // exec(
-      //   `./node_modules/@sentry/cli/sentry-cli releases info ${process.env.RAZZLE_SENTRY_RELEASE} | grep -q ${process.env.RAZZLE_SENTRY_RELEASE}`,
-      //   (err, output) => {
-      //     if (err) {
-      //       // log and return if we encounter an error
-      //       return;
-      //     }
-      //     if (output) {
-      //       CREATE = false;
-      //     }
-      //   },
-      // );
+      if (
+        releases?.find(
+          (release) =>
+            release?.version === process.env.RAZZLE_SENTRY_RELEASE &&
+            release?.projects.find(
+              (proj) => proj?.slug === process.env.RAZZLE_SENTRY_PROJECT,
+            ),
+        )
+      )
+        CREATE = false;
     }
     if (CREATE === true) {
-      // exec(
-      //   ` ./node_modules/@sentry/cli/sentry-cli releases new ${process.env.RAZZLE_SENTRY_RELEASE}`,
-      //   (err, output) => {
-      //     if (err) {
-      //       console.log(err);
-      //       // log and return if we encounter an error
-      //       return;
-      //     }
-      //     console.log(output);
-      //   },
-      // );
-      // exec(
-      //   `./node_modules/@sentry/cli/sentry-cli releases files ${process.env.RAZZLE_SENTRY_RELEASE} upload ./build/public/static/ --url-prefix "~/static"`,
-      //   (err, output) => {
-      //     if (err) {
-      //       console.log(err);
-      //       // log and return if we encounter an error
-      //       return;
-      //     }
-      //   },
-      // );
-      // exec(
-      //   ` ./node_modules/@sentry/cli/sentry-cli releases finalize ${process.env.RAZZLE_SENTRY_RELEASE}`,
-      //   (err, output) => {
-      //     if (err) {
-      //       console.log(err);
-      //       // log and return if we encounter an error
-      //       return;
-      //     }
-      //   },
-      // );
+      await fetchFromAPI(
+        `api/0/organizations/${process.env.RAZZLE_SENTRY_ORG}/releases/`,
+        {
+          Authorization: `Bearer ${process.env.RAZZLE_SENTRY_AUTH_TOKEN}`,
+
+          method: 'POST',
+          body: {
+            version: process.env.RAZZLE_SENTRY_RELEASE,
+            projects: [process.env.RAZZLE_SENTRY_PROJECT],
+          },
+        },
+      );
+      let response = await fetchFromAPI(
+        `api/0/organizations/${process.env.RAZZLE_SENTRY_ORG}/releases/${process.env.RAZZLE_SENTRY_RELEASE}/files/`,
+        {
+          Authorization: `Bearer ${process.env.RAZZLE_SENTRY_AUTH_TOKEN}`,
+          contentType: 'multipart/form-data',
+          method: 'POST',
+          body: {
+            name: '../../../../build/public/static',
+            file: 'static',
+          },
+        },
+      );
+      console.log(response);
     } else {
       console.log(
         `Release ${process.env.RAZZLE_SENTRY_RELEASE} already exists`,

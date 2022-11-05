@@ -30,7 +30,6 @@ const Sentry = loadable.lib(
 );
 
 const applyConfig = (config) => {
-  createSentryRelease();
   // const errorHandler = (error) =>
   //   Sentry.load().then((mod) => mod.captureException(error));
 
@@ -55,5 +54,5 @@ const applyConfig = (config) => {
 
   return config;
 };
-
+createSentryRelease();
 export default applyConfig;
