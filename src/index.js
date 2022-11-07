@@ -1,9 +1,9 @@
 import loadable from '@loadable/component';
 import initSentry from './sentry';
 import { sentryOptions } from './sentry-config';
-import { createSentryRelease } from './create-sentry-realease.js';
 import crashReporter from './crashReporter';
-
+import * as addonReducers from './reducers';
+import { createSentryRelease } from './create-sentry-realease.js';
 const sentryLibraries = {
   Sentry: loadable.lib(() =>
     import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'),
@@ -30,29 +30,33 @@ const Sentry = loadable.lib(
 );
 
 const applyConfig = (config) => {
-  // const errorHandler = (error) =>
-  //   Sentry.load().then((mod) => mod.captureException(error));
+  const errorHandler = (error) =>
+    Sentry.load().then((mod) => mod.captureException(error));
 
-  // if (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) {
-  //   config.settings.errorHandlers.push(errorHandler);
-  // }
-  // config.settings.sentryOptions = sentryOptions;
-  // config.settings.storeExtenders = (stack) => [crashReporter, ...stack];
+  if (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) {
+    config.settings.errorHandlers.push(errorHandler);
+  }
+  config.settings.sentryOptions = sentryOptions;
+  config.settings.storeExtenders = [
+    ...(config.settings.storeExtenders || []),
+    crashReporter,
+  ];
+
+  config.addonReducers = {
+    ...config.addonReducers,
+    ...addonReducers,
+  };
 
   if (__SERVER__) {
-    // const apply = require('./server').default;
+    const apply = require('./server').default;
+    apply();
     createSentryRelease();
-    // apply();
   }
 
-  if (
-    (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) ||
-    __SENTRY__?.SENTRY_DSN
-  ) {
-  }
-  //loadSentry();
+  if ((__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) || __SENTRY__?.SENTRY_DSN)
+    loadSentry();
 
   return config;
 };
-createSentryRelease();
+
 export default applyConfig;

@@ -38,7 +38,6 @@ const initSentry = (libraries) => {
   }
 
   if (__CLIENT__) {
-    console.log('client');
     if (window?.env?.RAZZLE_SENTRY_DSN) {
       if (!sentry_config) {
         sentry_config = {};

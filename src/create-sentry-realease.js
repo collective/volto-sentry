@@ -2,8 +2,6 @@ import { fetchFromAPI } from '../helpers/helpers';
 const exec = () => {};
 
 export const createSentryRelease = async () => {
-  console.log('intru in create');
-  console.log(process.env.RAZZLE_SENTRY_AUTH_TOKEN);
   let PARAM = process.env.RAZZLE_SENTRY_PARAM;
   if (!PARAM) PARAM = 'not forced';
 
@@ -47,19 +45,19 @@ export const createSentryRelease = async () => {
           },
         },
       );
-      let response = await fetchFromAPI(
-        `api/0/organizations/${process.env.RAZZLE_SENTRY_ORG}/releases/${process.env.RAZZLE_SENTRY_RELEASE}/files/`,
+      //THIS IS NOT WORKING IDK WHY
+      /* let response = await fetchFromAPI(
+        `api/0/projects/${process.env.RAZZLE_SENTRY_ORG}/${process.env.RAZZLE_SENTRY_PROJECT}/releases/${process.env.RAZZLE_SENTRY_RELEASE}/files/`,
         {
           Authorization: `Bearer ${process.env.RAZZLE_SENTRY_AUTH_TOKEN}`,
           contentType: 'multipart/form-data',
           method: 'POST',
           body: {
-            name: '../../../../build/public/static',
-            file: 'static',
+            name: './build/public/static',
+            file: './build/public/static',
           },
         },
-      );
-      console.log(response);
+      );*/
     } else {
       console.log(
         `Release ${process.env.RAZZLE_SENTRY_RELEASE} already exists`,

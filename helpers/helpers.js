@@ -9,6 +9,7 @@ export async function fetchFromAPI(endpointURL, opts) {
     body: null,
     ...opts,
   };
+
   try {
     const res = await fetch(`${API}/${endpointURL}`, {
       method,
