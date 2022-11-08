@@ -50,7 +50,6 @@ const applyConfig = (config) => {
   if (__SERVER__) {
     const apply = require('./server').default;
     apply();
-    createSentryRelease();
   }
 
   if ((__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) || __SENTRY__?.SENTRY_DSN)
