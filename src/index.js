@@ -3,7 +3,7 @@ import initSentry from './sentry';
 import { sentryOptions } from './sentry-config';
 import crashReporter from './crashReporter';
 import * as addonReducers from './reducers';
-import { createSentryRelease } from './create-sentry-realease.js';
+
 const sentryLibraries = {
   Sentry: loadable.lib(() =>
     import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'),
