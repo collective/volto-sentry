@@ -2,7 +2,6 @@ import loadable from '@loadable/component';
 import initSentry from './sentry';
 import { sentryOptions } from './sentry-config';
 import crashReporter from './crashReporter';
-import * as addonReducers from './reducers';
 
 const sentryLibraries = {
   Sentry: loadable.lib(() =>
@@ -44,7 +43,6 @@ const applyConfig = (config) => {
 
   config.addonReducers = {
     ...config.addonReducers,
-    ...addonReducers,
   };
 
   if (__SERVER__) {
