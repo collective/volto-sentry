@@ -41,10 +41,6 @@ const applyConfig = (config) => {
     crashReporter,
   ];
 
-  config.addonReducers = {
-    ...config.addonReducers,
-  };
-
   if (__SERVER__) {
     const apply = require('./server').default;
     apply();
