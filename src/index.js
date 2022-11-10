@@ -38,7 +38,7 @@ const applyConfig = (config) => {
   config.settings.sentryOptions = sentryOptions;
   config.settings.storeExtenders = [
     ...(config.settings.storeExtenders || []),
-    crashReporter,
+    (stack) => [crashReporter, ...stack],
   ];
 
   if (__SERVER__) {
