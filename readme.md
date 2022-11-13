@@ -27,7 +27,7 @@ After starting the application, if an error occurs, the errors will be sent to S
 
 ### Upgrading to 6.x
 
-This version requires: `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from Volto Core).
+This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from Volto Core).
 
 ## Installing the addon
 
