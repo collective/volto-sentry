@@ -13,7 +13,7 @@
 The configuration is done using environment variables:
 
   * `SENTRY_DSN` - required to enable the feature
-  * SENTRY_URL - the url of sentry
+  * `SENTRY_URL` - the URL of Sentry
   * SENTRY_AUTH_TOKEN - the authentication token for sentry
   * SENTRY_ORG - the name of the organization in sentry
   * SENTRY_PROJECT -the name of the project in sentry
