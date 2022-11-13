@@ -31,7 +31,7 @@ This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from V
 
 ## Installing the addon
 
-1. If you already have a volto project, just update `package.json`:
+1. If you already have a Volto project, update `package.json`:
 
    ```JSON
    "addons": [
