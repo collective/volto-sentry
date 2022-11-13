@@ -52,7 +52,7 @@ This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from V
    ```
 
 
-1. Install new addons and restart Volto:
+1. Install new add-ons and restart Volto:
 
    ```
    yarn
