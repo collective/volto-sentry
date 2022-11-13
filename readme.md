@@ -17,7 +17,7 @@ The configuration is done using environment variables:
   * `SENTRY_AUTH_TOKEN` - the authentication token for Sentry
   * `SENTRY_ORG` - the name of the organization in Sentry
   * `SENTRY_PROJECT` -the name of the project in Sentry
-  * SENTRY_RELEASE - release number
+  * `SENTRY_RELEASE` - release number
   
   If these env variables are configured, when the app is built or starts locally, a new release will be created in sentry, and the source code and source maps will be uploaded to it. After starting the application if an error will occure, the errors will be sent to sentry, and will be linked to the specified release.
 
