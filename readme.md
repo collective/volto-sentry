@@ -33,7 +33,7 @@ This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from V
 
 1. If you already have a Volto project, update `package.json`:
 
-   ```JSON
+   ```json
    "addons": [
       "@collective/volto-sentry"
    ],
