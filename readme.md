@@ -2,7 +2,7 @@
 
 ## Features
 
-### Extends the Volto functionalities by providing a way to easily integrate Sentry.io into your project
+- A Volto add-on that provides Sentry.io integration
 
 ## Prerequisites
   
