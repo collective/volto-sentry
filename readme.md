@@ -19,7 +19,9 @@ The configuration is done using environment variables:
   * `SENTRY_PROJECT` -the name of the project in Sentry
   * `SENTRY_RELEASE` - release number
   
-  If these env variables are configured, when the app is built or starts locally, a new release will be created in sentry, and the source code and source maps will be uploaded to it. After starting the application if an error will occure, the errors will be sent to sentry, and will be linked to the specified release.
+If these environment variables are configured, when the app is built or starts locally, a new release will be created in Sentry.
+The source code and source maps will be uploaded to Sentry, too.
+After starting the application, if an error occurs, the errors will be sent to Sentry, and will be linked to the specified release.
 
 ## Upgrade
 
