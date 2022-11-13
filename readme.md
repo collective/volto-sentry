@@ -47,7 +47,7 @@ This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from V
 
    ```
    npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --canary --addon @collective/volto-sentry
+   yo @plone/volto my-volto-project --addon @collective/volto-sentry
    cd my-volto-project
    ```
 
