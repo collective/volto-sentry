@@ -59,7 +59,7 @@ const initSentry = (libraries) => {
     }
   }
 
-  const sentryOptions = settings?.sentryOptions
+  const sentryOptions = settings.sentryOptions
     ? settings?.sentryOptions(libraries)
     : {};
 
