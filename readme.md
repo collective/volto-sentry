@@ -2,7 +2,7 @@
 
 ## Features
 
-- A Volto add-on that provides Sentry.io integration
+A Volto add-on that provides [Sentry.io](https://sentry.io/welcome/) integration.
 
 ## Prerequisites
   
