@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const SENTRY_KEYS = [
   'SENTRY_AUTH_TOKEN',
@@ -21,6 +22,25 @@ module.exports = {
     options: { pluginOptions, razzleOptions, webpackOptions },
     paths,
   }) {
+    if (
+      process.env.SENTRY_AUTH_TOKEN &&
+      process.env.SENTRY_URL &&
+      process.env.SENTRY_ORG &&
+      process.env.SENTRY_PROJECT &&
+      process.env.SENTRY_RELEASE
+    )
+      config.plugins.push(
+        new SentryWebpackPlugin({
+          url: process.env.SENTRY_URL,
+          release: process.env.SENTRY_RELEASE,
+          include: './build/public/static/js',
+          urlPrefix: '~/static/js',
+          ignore: ['node_modules'],
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+        }),
+      );
     let SENTRY = undefined;
 
     if (process.env.SENTRY_DSN) {

@@ -1,6 +1,5 @@
 import loadable from '@loadable/component';
 import initSentry from './sentry';
-import { sentryOptions } from './sentry-config';
 import crashReporter from './crashReporter';
 
 const sentryLibraries = {
@@ -35,8 +34,32 @@ const applyConfig = (config) => {
   if (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) {
     config.settings.errorHandlers.push(errorHandler);
   }
-  config.settings.sentryOptions = sentryOptions;
-  config.settings.storeExtenders = (stack) => [crashReporter, ...stack];
+  config.settings.sentryOptions = (libraries) => {
+    const { CaptureConsole } = libraries['SentryIntegrations'];
+    return {
+      // dsn: 'https://key@sentry.io/1',
+      // environment: 'production',
+      // release: '1.2.3',
+      // serverName: 'volto',
+      // tags: {
+      //   site: 'foo.bar',
+      //   app: 'test_app',
+      //   logger: 'volto',
+      // },
+      // extras: {
+      //   key: 'value',
+      // },
+      // integrations: [
+      //   new CaptureConsole({
+      //     levels: ['error'],
+      //   }),
+      // ],
+    };
+  };
+  config.settings.storeExtenders = [
+    ...(config.settings.storeExtenders || []),
+    (stack) => [crashReporter, ...stack],
+  ];
 
   if (__SERVER__) {
     const apply = require('./server').default;

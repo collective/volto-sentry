@@ -60,7 +60,7 @@ const initSentry = (libraries) => {
   }
 
   const sentryOptions = settings.sentryOptions
-    ? settings.sentryOptions(libraries)
+    ? settings?.sentryOptions(libraries)
     : {};
 
   if (sentry_config || sentryOptions.dsn) {
