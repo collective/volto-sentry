@@ -1,8 +1,10 @@
 {
   "name": "@plone-collective/volto-sentry",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "volto-sentry: Volto add-on",
   "main": "src/index.js",
+  "author": "Plone Collective",
+  "homepage": "https://github.com/collective/volto-sentry",
   "license": "MIT",
   "keywords": [
     "volto-addon",
