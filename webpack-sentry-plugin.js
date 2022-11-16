@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+var path = require('path');
+// var Builder = require('systemjs-builder');
 
 const SENTRY_KEYS = [
   'SENTRY_AUTH_TOKEN',
@@ -13,7 +15,6 @@ const SENTRY_KEYS = [
 function validateSentryCliConfiguration(env) {
   return SENTRY_KEYS.findIndex((k) => env[k] === undefined) === -1;
 }
-
 module.exports = {
   modifyWebpackConfig({
     env: { target, dev },
@@ -28,19 +29,25 @@ module.exports = {
       process.env.SENTRY_ORG &&
       process.env.SENTRY_PROJECT &&
       process.env.SENTRY_RELEASE
-    )
+    ) {
       config.plugins.push(
+        new webpack.SourceMapDevToolPlugin({
+          filename: '[name].[hash].js.map',
+          exclude: ['vendor'],
+          append: '//# sourceMappingURL=[url]',
+        }),
         new SentryWebpackPlugin({
           url: process.env.SENTRY_URL,
           release: process.env.SENTRY_RELEASE,
-          include: './build/public/static/js',
-          urlPrefix: '~/static/js',
+          include: './build/public/static/',
+          urlPrefix: '~/static',
           ignore: ['node_modules'],
           org: process.env.SENTRY_ORG,
           project: process.env.SENTRY_PROJECT,
           authToken: process.env.SENTRY_AUTH_TOKEN,
         }),
       );
+    }
     let SENTRY = undefined;
 
     if (process.env.SENTRY_DSN) {
