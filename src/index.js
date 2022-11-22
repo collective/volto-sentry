@@ -70,10 +70,10 @@ const applyConfig = (config) => {
     loadSentry();
   }
 
-  // Breaks storybook
-  // if (__SENTRY__?.SENTRY_DSN) {
-  //   loadSentry();
-  // }
+  // check if we have __SENTRY__ otherwise we break storybook
+  if (typeof __SENTRY__ !== 'undefined' && __SENTRY__.SENTRY_DSN) {
+    loadSentry();
+  }
 
   return config;
 };
