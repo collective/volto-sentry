@@ -66,8 +66,14 @@ const applyConfig = (config) => {
     apply();
   }
 
-  if ((__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) || __SENTRY__?.SENTRY_DSN)
+  if (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) {
     loadSentry();
+  }
+
+  // check if we have __SENTRY__ otherwise we break storybook
+  if (typeof __SENTRY__ !== 'undefined' && __SENTRY__.SENTRY_DSN) {
+    loadSentry();
+  }
 
   return config;
 };
