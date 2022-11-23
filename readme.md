@@ -33,11 +33,11 @@ This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from V
 
    ```json
    "addons": [
-      "@collective/volto-sentry"
+      "@plone-collective/volto-sentry"
    ],
 
    "dependencies": {
-      "@collective/volto-sentry": "*"
+      "@plone-collective/volto-sentry": "*"
    }
    ```
 
@@ -45,7 +45,7 @@ This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from V
 
    ```
    npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --addon @collective/volto-sentry
+   yo @plone/volto my-volto-project --addon @plone-collective/volto-sentry
    cd my-volto-project
    ```
 
