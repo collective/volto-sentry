@@ -3,14 +3,19 @@ import loadable from '@loadable/component';
 const SentryBrowser = loadable.lib(() =>
   import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'),
 );
-const SentryNode = loadable.lib(() =>
-  import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'),
-);
+
+let SentryNode = undefined;
+if (__SERVER__) {
+  SentryNode = loadable.lib(() =>
+    import(/* webpackChunkName: "s_entry-node" */ '@sentry/node'),
+  );
+}
 
 const crashReporter = (store) => (next) => (action) => {
   try {
     return next(action);
   } catch (error) {
+    console.log("Caught error", error);
     if (
       __SENTRY__?.SENTRY_DSN ||
       process?.env?.RAZZLE_SENTRY_DSN ||
