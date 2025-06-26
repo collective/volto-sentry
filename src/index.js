@@ -49,11 +49,11 @@ const applyConfig = (config) => {
       // extras: {
       //   key: 'value',
       // },
-      // integrations: [
-      //   new CaptureConsole({
-      //     levels: ['error'],
-      //   }),
-      // ],
+      integrations: [
+        new CaptureConsole({
+          levels: ['error'],
+        }),
+      ],
     };
   };
   config.settings.storeExtenders = [
