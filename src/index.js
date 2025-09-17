@@ -1,6 +1,7 @@
 import loadable from '@loadable/component';
 import initSentry from './sentry';
 import crashReporter from './crashReporter';
+import { sentryExpressErrorMiddleware } from './expressErrorMiddleware';
 
 const sentryLibraries = {
   Sentry: loadable.lib(() =>
@@ -60,6 +61,14 @@ const applyConfig = (config) => {
     ...(config.settings.storeExtenders || []),
     (stack) => [crashReporter, ...stack],
   ];
+
+  // Add Sentry Express error middleware
+  if (__SERVER__ && (process.env.RAZZLE_SENTRY_DSN || (typeof __SENTRY__ !== 'undefined' && __SENTRY__.SENTRY_DSN))) {
+    config.settings.expressMiddleware = [
+      ...(config.settings.expressMiddleware || []),
+      sentryExpressErrorMiddleware,
+    ];
+  }
 
   if (__SERVER__) {
     const apply = require('./server').default;
