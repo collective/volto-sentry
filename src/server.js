@@ -2,7 +2,6 @@ import * as Sentry from '@sentry/node';
 import * as SentryIntegrations from '@sentry/integrations';
 
 import initSentry from './sentry';
-import { addTestSSRErrorRoutes } from './testSSRError';
 
 export default function apply() {
   initSentry({ Sentry, SentryIntegrations });
@@ -34,7 +33,7 @@ export default function apply() {
       });
     });
 
-    // Add a safe console error capture without overriding console.error globally
+    // Capture SSR console errors
     const captureConsoleError = (...args) => {
       const errorMessage = args.join(' ');
       
@@ -46,7 +45,6 @@ export default function apply() {
         errorMessage.includes('This error originated either by throwing inside of an async function') ||
         errorMessage.includes('superagent') ||
         errorMessage.includes('Service Unavailable') ||
-        errorMessage.includes('SSR crash test') ||
         errorMessage.includes('thrown during server-side render');
 
       if (isSSRError) {
@@ -58,7 +56,6 @@ export default function apply() {
             timestamp: new Date().toISOString(),
           });
 
-          // Try to extract error object if available
           const errorObj = args.find(arg => arg instanceof Error);
           if (errorObj) {
             Sentry.captureException(errorObj);
@@ -69,15 +66,10 @@ export default function apply() {
       }
     };
 
-    // Store the capture function globally so it can be used elsewhere if needed
-    global.__sentrySSRErrorCapture = captureConsoleError;
-    
     // Override console.error to capture SSR errors
     const originalConsoleError = console.error;
     console.error = function(...args) {
-      // Call original console.error first
       originalConsoleError.apply(console, args);
-      // Then try to capture for Sentry
       captureConsoleError(...args);
     };
   }

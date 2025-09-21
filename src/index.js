@@ -34,8 +34,8 @@ const applyConfig = (config) => {
   if (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) {
     config.settings.errorHandlers.push(errorHandler);
   }
-  config.settings.sentryOptions = (/* libraries */) => {
-    // const { CaptureConsole } = libraries['SentryIntegrations'];
+  config.settings.sentryOptions = (libraries) => {
+    const { CaptureConsole } = libraries['SentryIntegrations'];
     return {
       // dsn: 'https://key@sentry.io/1',
       // environment: 'production',

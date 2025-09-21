@@ -1,4 +1,3 @@
-// Only import Sentry on server side to avoid webpack issues
 let Sentry = null;
 if (__SERVER__) {
   Sentry = require('@sentry/node');
@@ -15,29 +14,22 @@ export const withSentrySSRErrorHandling = (fn, options = {}) => {
     try {
       return await fn(...args);
     } catch (error) {
-      // Only capture if Sentry is configured and available
-      if (Sentry && (process.env.RAZZLE_SENTRY_DSN || (typeof __SENTRY__ !== 'undefined' && __SENTRY__?.SENTRY_DSN))) {
+          if (Sentry && (process.env.RAZZLE_SENTRY_DSN || (typeof __SENTRY__ !== 'undefined' && __SENTRY__?.SENTRY_DSN))) {
         Sentry.withScope((scope) => {
           scope.setTag('errorType', 'ssrError');
           scope.setTag('source', options.source || 'unknown');
           scope.setLevel('error');
           
-          // Add additional context if provided
           if (options.context) {
             scope.setContext('additionalContext', options.context);
           }
           
-          // Add function name if available
           if (fn.name) {
             scope.setTag('functionName', fn.name);
           }
-          
-          // Capture the error
           Sentry.captureException(error);
         });
       }
-      
-      // Re-throw the error to maintain original behavior
       throw error;
     }
   };
