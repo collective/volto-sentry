@@ -33,37 +33,24 @@ export default function apply() {
       });
     });
 
-    // Capture SSR console errors
+    // Capture all SSR console errors
     const captureConsoleError = (...args) => {
-      const errorMessage = args.join(' ');
-      
-      const isSSRError = 
-        errorMessage.includes('Error: Service Unavailable') ||
-        errorMessage.includes('Error: Not Found') ||
-        errorMessage.includes('TypeError: Cannot read properties') ||
-        errorMessage.includes('Error: connect EHOSTUNREACH') ||
-        errorMessage.includes('This error originated either by throwing inside of an async function') ||
-        errorMessage.includes('superagent') ||
-        errorMessage.includes('Service Unavailable') ||
-        errorMessage.includes('thrown during server-side render');
-
-      if (isSSRError) {
-        Sentry.withScope((scope) => {
-          scope.setTag('errorType', 'ssrConsoleError');
-          scope.setLevel('error');
-          scope.setContext('ssrErrorDetails', {
-            originalArgs: args,
-            timestamp: new Date().toISOString(),
-          });
-
-          const errorObj = args.find(arg => arg instanceof Error);
-          if (errorObj) {
-            Sentry.captureException(errorObj);
-          } else {
-            Sentry.captureMessage(`SSR Console Error: ${errorMessage}`, 'error');
-          }
+      Sentry.withScope((scope) => {
+        scope.setTag('errorType', 'ssrConsoleError');
+        scope.setLevel('error');
+        scope.setContext('ssrErrorDetails', {
+          originalArgs: args,
+          timestamp: new Date().toISOString(),
         });
-      }
+
+        const errorObj = args.find(arg => arg instanceof Error);
+        if (errorObj) {
+          Sentry.captureException(errorObj);
+        } else {
+          const errorMessage = args.join(' ');
+          Sentry.captureMessage(`SSR Console Error: ${errorMessage}`, 'error');
+        }
+      });
     };
 
     // Override console.error to capture SSR errors
