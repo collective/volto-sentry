@@ -43,7 +43,7 @@ export default function apply() {
           timestamp: new Date().toISOString(),
         });
 
-        const errorObj = args.find(arg => arg instanceof Error);
+        const errorObj = args.find((arg) => arg instanceof Error);
         if (errorObj) {
           Sentry.captureException(errorObj);
         } else {
@@ -54,8 +54,10 @@ export default function apply() {
     };
 
     // Override console.error to capture SSR errors
+    // eslint-disable-next-line no-console
     const originalConsoleError = console.error;
-    console.error = function(...args) {
+    // eslint-disable-next-line no-console
+    console.error = function (...args) {
       originalConsoleError.apply(console, args);
       captureConsoleError(...args);
     };

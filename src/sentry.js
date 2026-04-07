@@ -24,9 +24,7 @@ const initSentry = (libraries) => {
     }
     if (sentry_config) {
       if (process.env.RAZZLE_SENTRY_BACKEND_CONFIG) {
-        sentry_config.SENTRY_CONFIG = JSON.parse(
-          process.env.RAZZLE_SENTRY_BACKEND_CONFIG,
-        );
+        sentry_config.SENTRY_CONFIG = JSON.parse(process.env.RAZZLE_SENTRY_BACKEND_CONFIG);
       }
       if (process.env.RAZZLE_SENTRY_RELEASE) {
         if (!sentry_config.SENTRY_CONFIG) {
@@ -46,9 +44,7 @@ const initSentry = (libraries) => {
     }
     if (sentry_config) {
       if (window?.env?.RAZZLE_SENTRY_FRONTEND_CONFIG) {
-        sentry_config.SENTRY_CONFIG = JSON.parse(
-          window.env.RAZZLE_SENTRY_FRONTEND_CONFIG,
-        );
+        sentry_config.SENTRY_CONFIG = JSON.parse(window.env.RAZZLE_SENTRY_FRONTEND_CONFIG);
       }
       if (window?.env?.RAZZLE_SENTRY_RELEASE) {
         if (!sentry_config.SENTRY_CONFIG) {
@@ -59,9 +55,7 @@ const initSentry = (libraries) => {
     }
   }
 
-  const sentryOptions = settings.sentryOptions
-    ? settings?.sentryOptions(libraries)
-    : {};
+  const sentryOptions = settings.sentryOptions ? settings?.sentryOptions(libraries) : {};
 
   if (sentry_config || sentryOptions.dsn) {
     let sentry_options = {

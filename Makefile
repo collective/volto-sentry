@@ -14,6 +14,7 @@ MAKEFLAGS+=--no-builtin-rules
 
 DIR=$(shell basename $$(pwd))
 ADDON ?= "@plone-collective/volto-sentry"
+NODE_MODULES?="../../../node_modules"
 
 # Recipe snippets for reuse
 
@@ -56,3 +57,11 @@ start-backend-docker:		## Starts a Docker-based backend
 .PHONY: help
 help:		## Show this help.
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
+
+.PHONY: lint
+lint:			## ES Lint
+	$(NODE_MODULES)/.bin/eslint --max-warnings=0 'src/**/*.{js,jsx}'
+
+.PHONY: lint-fix
+lint-fix:		## Fix ES Lint
+	$(NODE_MODULES)/.bin/eslint --fix 'src/**/*.{js,jsx}'
