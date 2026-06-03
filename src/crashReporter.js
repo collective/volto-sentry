@@ -26,7 +26,7 @@ const crashReporter = (store) => (next) => (action) => {
           scope.setLevel('error');
           scope.setExtras({
             action,
-            state: store.getState(),
+            state: store?.getState?.() ?? undefined,
             isSSR: __SERVER__,
             timestamp: new Date().toISOString(),
           });
