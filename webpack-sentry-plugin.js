@@ -38,7 +38,7 @@ module.exports = {
           ignore: ['node_modules'],
           org: process.env.SENTRY_ORG,
           project: process.env.SENTRY_PROJECT,
-          authToken: process.env.SENTRY_AUTH_TOKEN,
+          authToken: process.env.SENTRY_AUTH_TOKEN, // betterleaks:allow -- environment variable reference
         }),
       );
     let SENTRY = undefined;
