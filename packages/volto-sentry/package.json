@@ -1,0 +1,67 @@
+{
+  "name": "@plone-collective/volto-sentry",
+  "version": "1.0.1",
+  "description": "volto-sentry: Volto add-on",
+  "main": "src/index.js",
+  "author": "Plone Collective",
+  "homepage": "https://github.com/collective/volto-sentry",
+  "license": "MIT",
+  "keywords": [
+    "volto-addon",
+    "volto",
+    "plone",
+    "react"
+  ],
+  "scripts": {
+    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
+    "dry-release": "release-it --dry-run",
+    "release": "release-it",
+    "release-major-alpha": "release-it major --preRelease=alpha",
+    "release-alpha": "release-it --preRelease=alpha",
+    "test": "vitest --config ./vitest.config.mjs run --passWithNoTests",
+    "test:fix": "vitest --config ./vitest.config.mjs run --passWithNoTests --update",
+    "prepare": "cd ../.. && husky install || true"
+  },
+  "devDependencies": {
+    "@plone/scripts": "workspace:*",
+    "@cypress/code-coverage": "^3.10.0",
+    "@plone/registry": "workspace:*",
+    "@plone/types": "workspace:*",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "4.7.0",
+    "@vitest/coverage-v8": "3.2.7",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "cypress": "13.1.0",
+    "dotenv": "^16.3.2",
+    "husky": "^8.0.3",
+    "jsdom": "23.0.0",
+    "lint-staged": "^14.0.1",
+    "md5": "^2.3.0",
+    "redux-mock-store": "1.5.4",
+    "redux-thunk": "^2.4.2",
+    "release-it": "^19.0.5",
+    "typescript": "^5.7.3",
+    "vite": "6.4.3",
+    "vitest": "3.2.7"
+  },
+  "dependencies": {
+    "@sentry/browser": "7.15.0",
+    "@sentry/integrations": "7.15.0",
+    "@sentry/node": "7.15.0",
+    "@sentry/webpack-plugin": "1.19.1"
+  },
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
