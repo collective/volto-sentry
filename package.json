@@ -38,6 +38,7 @@
     "@plone-collective/volto-sentry": "workspace:*"
   },
   "devDependencies": {
+    "lint-staged": "^14.0.1",
     "mrs-developer": "^2.2.0"
   },
   "pnpm": {

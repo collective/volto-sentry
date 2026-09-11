@@ -2,6 +2,27 @@
   "name": "@plone-collective/volto-sentry",
   "version": "1.0.1",
   "description": "volto-sentry: Volto add-on",
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "make lint-fix",
+      "make prettier-fix"
+    ],
+    "src/**/*.{jsx}": [
+      "make i18n"
+    ],
+    "theme/**/*.{css,less}": [
+      "make stylelint-fix"
+    ],
+    "src/**/*.{css,less}": [
+      "make stylelint-fix"
+    ],
+    "theme/**/*.overrides": [
+      "make stylelint-fix"
+    ],
+    "src/**/*.overrides": [
+      "make stylelint-fix"
+    ]
+  },
   "main": "src/index.js",
   "author": "Plone Collective",
   "homepage": "https://github.com/collective/volto-sentry",
