@@ -27,6 +27,18 @@ const Sentry = loadable.lib(
   () => import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'), // chunk name avoids ad blockers
 );
 
+/**
+ * Initialise the SSR client after the current tick. Add-ons listed after this
+ * one replace `settings.sentryOptions` while their own config is applied, so
+ * initialising earlier creates a client with the placeholder options and the
+ * server loses `ignoreErrors`, `beforeSend` and the custom tags.
+ * @param {Function} apply Server initialiser exported by `./server`.
+ * @returns {void}
+ */
+export const initServerSentry = (apply) => {
+  setImmediate(apply);
+};
+
 const applyConfig = (config) => {
   const errorHandler = (error) =>
     Sentry.load().then((mod) => mod.captureException(error));
@@ -62,8 +74,7 @@ const applyConfig = (config) => {
   ];
 
   if (__SERVER__) {
-    const apply = require('./server').default;
-    apply();
+    initServerSentry(require('./server').default);
   }
 
   if (__CLIENT__ && window?.env?.RAZZLE_SENTRY_DSN) {
