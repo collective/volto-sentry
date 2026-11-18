@@ -25,6 +25,20 @@ After starting the application, if an error occurs, the errors will be sent to S
 
 ## Upgrade
 
+### 2.0.0
+
+Developed and tested against `@plone/volto` 19 (React 18). The add-on API is unchanged: the
+`sentryOptions` callback and the SSR helpers (`withSentrySSRErrorHandling`,
+`sentrySSRErrorMiddleware`, `captureSSRError`) keep their signatures, so an upgrade needs no code
+changes.
+
+- the repository became a pnpm monorepo and the add-on moved to `packages/volto-sentry`, so the
+  development workflow is `pnpm install`, `pnpm start`, `pnpm test` and `pnpm build`;
+- the Yarn and npm lock files were replaced by `pnpm-lock.yaml` and `pnpm-workspace.yaml`
+  (`packageManager: pnpm@10.20.0`).
+
+### 1.x
+
 This version requires `@plone/volto >= 16.0.0.alpha.45` (`sentry` removed from Volto Core).
 
 ## Installing the addon
