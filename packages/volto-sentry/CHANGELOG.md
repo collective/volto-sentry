@@ -8,6 +8,23 @@
 
 <!-- towncrier release notes start -->
 
+## 2.0.0 (2026-11-18)
+
+
+### Breaking
+
+- Volto 19 support. The add-on was migrated to the Volto 19 add-on structure and is now developed and tested against `@plone/volto` 19 (React 18). The repository is a pnpm monorepo and the add-on moved to `packages/volto-sentry`; the Yarn and npm lock files were replaced by pnpm (`pnpm-lock.yaml`, `pnpm-workspace.yaml`, `packageManager: pnpm@10.20.0`), so the development workflow is now `pnpm install`, `pnpm start`, `pnpm test`, and `pnpm build`. 
+
+
+### Internal
+
+- Replaced the Jest configuration with a Vitest setup (`vitest.config.mjs`), moved the Cypress tests from `cypress/integration` to `cypress/tests` following the Volto 19 add-on layout, added a Storybook configuration, and added GitHub Actions workflows for CI and the towncrier changelog check. Reformatted the sources with the new Prettier and ESLint configuration, removed the unused `CaptureConsole` import from the Sentry integration setup, and added the missing trailing newlines. 
+
+
+### Documentation
+
+- Added the Sphinx documentation scaffold using Plone Sphinx Theme with a Read the Docs configuration, and backfilled the release notes of the 0.2.0 to 1.0.1 releases from the Git history. 
+
 ## 1.0.1 (2026-06-04)
 
 ### Bugfix

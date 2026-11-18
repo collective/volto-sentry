@@ -1,6 +1,6 @@
 {
   "name": "@plone-collective/volto-sentry-dev",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "volto-sentry: Volto add-on",
   "author": "Plone Collective",
   "homepage": "https://github.com/collective/volto-sentry",
