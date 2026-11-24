@@ -1,0 +1,1 @@
+Skip the source map upload when Sentry does not answer within a few seconds, and never return a non-zero status: an unreachable Sentry used to block container startup, and a failed upload aborted an entrypoint that runs with `set -e`.
