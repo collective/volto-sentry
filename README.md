@@ -18,6 +18,9 @@ The configuration is done using environment variables:
   * `SENTRY_ORG` - the name of the organization in Sentry
   * `SENTRY_PROJECT` -the name of the project in Sentry
   * `SENTRY_RELEASE` - release number
+  * `SENTRY_SOURCEMAPS_DIR` - optional, the folder of the built JS chunks and source maps that
+    `scripts/create-sentry-release.sh` uploads; by default the first of `./build/public/static/js`
+    (Volto 18) and `./core/packages/volto/build/public/static/js` (Volto 19) that exists
   
 If these environment variables are configured, when the app is built or starts locally, a new release will be created in Sentry.
 The source code and source maps will be uploaded to Sentry, too.
